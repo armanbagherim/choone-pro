@@ -1,3 +1,30 @@
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Regular.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Regular.woff") format("woff");
+}
+
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Medium.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Medium.woff") format("woff");
+}
+
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Bold.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Bold.woff") format("woff");
+}
+
 .wbp-admin {
 	direction: rtl;
 	--wbp-primary: #173126;
@@ -11,12 +38,21 @@
 		radial-gradient(circle at top right, rgba(201, 168, 106, 0.18), transparent 28%),
 		linear-gradient(180deg, #f8f3e9, #f1ebdd);
 	color: var(--wbp-ink);
+	font-family: "IRANSansX", sans-serif !important;
 }
 
 .wbp-admin h1,
 .wbp-admin h2 {
 	color: var(--wbp-ink);
 	margin-top: 0;
+}
+
+.wbp-admin *,
+.wbp-admin input,
+.wbp-admin textarea,
+.wbp-admin select,
+.wbp-admin button {
+	font-family: "IRANSansX", sans-serif !important;
 }
 
 .wbp-settings-hero {
@@ -297,13 +333,22 @@
 }
 
 .wbp-settings-actions .button-primary,
+.wbp-admin .button-primary,
+.wbp-admin .button,
+.wbp-admin .button-secondary {
+	min-height: 40px;
+	padding: 0 16px;
+	border: 1px solid #cfe0fb;
+	border-radius: 12px;
+	background: #fff;
+	color: #1d4ed8;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
 .wbp-admin .button-primary {
-	min-height: 46px;
-	padding: 0 22px;
-	border: 0;
-	border-radius: 14px;
-	background: linear-gradient(135deg, #173126, #2a5944);
-	box-shadow: 0 12px 26px rgba(23, 49, 38, 0.16);
+	background: #1d4ed8;
+	border-color: #1d4ed8;
+	color: #fff;
 }
 
 .wbp-chat {
@@ -321,6 +366,85 @@
 	background: #eef7f1;
 }
 
+.wbp-offer-hero,
+.wbp-offer-hero-meta,
+.wbp-offer-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.wbp-offer-hero {
+	align-items: flex-start;
+	justify-content: space-between;
+	margin: 24px 0 8px;
+	padding: 24px 28px;
+	border-radius: 28px;
+	background:
+		radial-gradient(circle at top left, rgba(201, 168, 106, 0.16), transparent 30%),
+		linear-gradient(135deg, #fffdfa, #f5ecdd);
+	border: 1px solid rgba(222, 213, 196, 0.85);
+}
+
+.wbp-offer-hero p,
+.wbp-offer-token {
+	margin: 8px 0 0;
+	color: var(--wbp-muted);
+}
+
+.wbp-offer-hero-meta {
+	align-items: center;
+}
+
+.wbp-offer-stats {
+	margin-bottom: 6px;
+}
+
+.wbp-offer-stats .wbp-card {
+	flex: 1 1 180px;
+}
+
+.wbp-detail-panel .wbp-meta li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 14px;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.62);
+	border: 1px solid rgba(222, 213, 196, 0.8);
+}
+
+.wbp-detail-panel .wbp-meta li span {
+	color: var(--wbp-muted);
+}
+
+.wbp-detail-panel .wbp-meta li strong {
+	color: var(--wbp-ink);
+}
+
+.wbp-customer-grid {
+	grid-template-columns: 1fr;
+}
+
+.wbp-customer-grid li {
+	min-height: 64px;
+}
+
+.wbp-admin-message-form {
+	display: grid;
+	gap: 10px;
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px solid rgba(222, 213, 196, 0.8);
+}
+
+.wbp-admin-message-form textarea {
+	width: 100%;
+	min-height: 110px;
+	box-sizing: border-box;
+}
+
 @media (max-width: 960px) {
 	.wbp-detail-grid {
 		grid-template-columns: 1fr;
@@ -335,5 +459,12 @@
 
 	.wbp-settings-badge {
 		align-self: flex-start;
+	}
+
+	.wbp-offer-hero,
+	.wbp-offer-hero-meta,
+	.wbp-detail-panel .wbp-meta li {
+		flex-direction: column;
+		align-items: stretch;
 	}
 }

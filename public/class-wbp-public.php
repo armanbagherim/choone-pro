@@ -147,9 +147,10 @@ class WBP_Public {
 					<div class="wbp-box-head">
 						<span class="wbp-eyebrow"><?php esc_html_e( 'چانه‌زنی هوشمند', 'woo-bargain-pro' ); ?></span>
 						<h3 id="<?php echo esc_attr( 'wbp-modal-title-' . $product_id ); ?>"><?php esc_html_e( 'قیمت پیشنهادیتو بده', 'woo-bargain-pro' ); ?></h3>
-						<p><?php esc_html_e( 'پیشنهادت را ثبت کن، ما بررسی می‌کنیم و نتیجه را خیلی زود بهت اطلاع می‌دهیم.', 'woo-bargain-pro' ); ?></p>
+						<p><?php esc_html_e( 'ثبت کن تا نتیجه را بهت اطلاع بدهیم.', 'woo-bargain-pro' ); ?></p>
 					</div>
 					<form class="wbp-offer-form">
+						<div class="wbp-section-label"><?php esc_html_e( 'ثبت پیشنهاد', 'woo-bargain-pro' ); ?></div>
 						<input type="hidden" name="product_id" value="<?php echo esc_attr( (string) $product_id ); ?>">
 						<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'wbp_offer_nonce' ) ); ?>">
 						<?php if ( $show_original_price || $show_minimum_hint ) : ?>
@@ -167,10 +168,10 @@ class WBP_Public {
 							<?php if ( ! is_user_logged_in() ) : ?>
 								<label class="wbp-field"><span><?php esc_html_e( 'نام', 'woo-bargain-pro' ); ?></span><input type="text" name="guest_name" required></label>
 							<?php else : ?>
-								<div class="wbp-user-chip wbp-field"><strong><?php echo esc_html( $user->display_name ); ?></strong><span><?php esc_html_e( 'حساب شما برای این پیشنهاد استفاده می‌شود.', 'woo-bargain-pro' ); ?></span></div>
+								<div class="wbp-user-chip wbp-field wbp-field-full"><strong><?php echo esc_html( $user->display_name ); ?></strong><span><?php esc_html_e( 'این درخواست با حساب شما ثبت می‌شود.', 'woo-bargain-pro' ); ?></span></div>
 							<?php endif; ?>
 							<?php if ( $collect_phone ) : ?>
-								<label class="wbp-field"><span><?php esc_html_e( 'شماره موبایل', 'woo-bargain-pro' ); ?></span><input type="text" name="guest_phone" value="<?php echo esc_attr( $phone_value ); ?>" <?php echo $require_phone ? 'required' : ''; ?>></label>
+								<label class="wbp-field wbp-field-full"><span><?php esc_html_e( 'شماره موبایل', 'woo-bargain-pro' ); ?></span><input type="text" name="guest_phone" value="<?php echo esc_attr( $phone_value ); ?>" <?php echo $require_phone ? 'required' : ''; ?>></label>
 							<?php endif; ?>
 							<?php if ( 'yes' === WBP_Settings::get( 'require_email', 'no' ) ) : ?>
 								<label class="wbp-field"><span><?php esc_html_e( 'ایمیل', 'woo-bargain-pro' ); ?></span><input type="email" name="guest_email" value="<?php echo esc_attr( $email_value ); ?>" required></label>
@@ -187,18 +188,27 @@ class WBP_Public {
 							<div>
 								<span class="wbp-eyebrow"><?php esc_html_e( 'آخرین وضعیت', 'woo-bargain-pro' ); ?></span>
 								<h4><?php esc_html_e( 'درخواست شما ثبت شده است', 'woo-bargain-pro' ); ?></h4>
+								<p class="wbp-status-timer" data-wbp-timer></p>
 							</div>
 							<span class="wbp-badge status-pending" data-wbp-status-badge><?php esc_html_e( 'در انتظار بررسی', 'woo-bargain-pro' ); ?></span>
 						</div>
-						<div class="wbp-offer-summary" data-wbp-offer-summary></div>
-						<div class="wbp-offer-link" data-wbp-offer-link></div>
-						<div class="wbp-thread" data-wbp-thread></div>
-						<form class="wbp-thread-form">
-							<input type="hidden" name="offer_id" value="">
-							<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'wbp_offer_nonce' ) ); ?>">
-							<textarea name="message" rows="3" placeholder="<?php esc_attr_e( 'اگر لازم است پیام بگذارید...', 'woo-bargain-pro' ); ?>"></textarea>
-							<button type="submit"><?php esc_html_e( 'ارسال پیام', 'woo-bargain-pro' ); ?></button>
-						</form>
+						<div class="wbp-tabs" role="tablist">
+							<button type="button" class="wbp-tab is-active" data-wbp-tab="negotiation"><?php esc_html_e( 'چونه‌زنی', 'woo-bargain-pro' ); ?></button>
+							<button type="button" class="wbp-tab" data-wbp-tab="chat"><?php esc_html_e( 'گفت‌وگو با فروشنده', 'woo-bargain-pro' ); ?></button>
+						</div>
+						<div class="wbp-tab-panel is-active" data-wbp-panel="negotiation">
+							<div class="wbp-offer-summary" data-wbp-offer-summary></div>
+							<div class="wbp-offer-link" data-wbp-offer-link></div>
+						</div>
+						<div class="wbp-tab-panel" data-wbp-panel="chat">
+							<div class="wbp-thread" data-wbp-thread></div>
+							<form class="wbp-thread-form">
+								<input type="hidden" name="offer_id" value="">
+								<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'wbp_offer_nonce' ) ); ?>">
+								<textarea name="message" rows="3" placeholder="<?php esc_attr_e( 'پیامت را برای فروشنده بنویس...', 'woo-bargain-pro' ); ?>"></textarea>
+								<button type="submit"><?php esc_html_e( 'ارسال پیام', 'woo-bargain-pro' ); ?></button>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -382,6 +392,35 @@ class WBP_Public {
 	}
 
 	protected function prepare_offer_payload( object $offer ): array {
+		$created_at_unix = strtotime( (string) $offer->created_at );
+		$expires_at_unix = ! empty( $offer->expires_at ) ? strtotime( (string) $offer->expires_at ) : 0;
+		$records         = array(
+			array(
+				'type'  => 'submitted',
+				'label' => __( 'درخواست شما', 'woo-bargain-pro' ),
+				'value' => wc_price( (float) $offer->offered_price ),
+				'time'  => wp_date( 'Y/m/d H:i', $created_at_unix ),
+			),
+		);
+
+		if ( $offer->counter_price ) {
+			$records[] = array(
+				'type'  => 'countered',
+				'label' => __( 'پیشنهاد متقابل فروشنده', 'woo-bargain-pro' ),
+				'value' => wc_price( (float) $offer->counter_price ),
+				'time'  => wp_date( 'Y/m/d H:i', strtotime( (string) $offer->updated_at ) ),
+			);
+		}
+
+		if ( $offer->accepted_price ) {
+			$records[] = array(
+				'type'  => 'accepted',
+				'label' => __( 'قیمت تایید شده', 'woo-bargain-pro' ),
+				'value' => wc_price( (float) $offer->accepted_price ),
+				'time'  => wp_date( 'Y/m/d H:i', strtotime( (string) $offer->updated_at ) ),
+			);
+		}
+
 		return array(
 			'id'               => (int) $offer->id,
 			'token'            => (string) $offer->token,
@@ -394,6 +433,9 @@ class WBP_Public {
 			'accepted_price'   => $offer->accepted_price ? wc_price( (float) $offer->accepted_price ) : '',
 			'checkout_url'     => (string) $offer->checkout_url,
 			'created_at'       => wp_date( 'Y/m/d H:i', strtotime( $offer->created_at ) ),
+			'created_at_unix'  => $created_at_unix,
+			'expires_at_unix'  => $expires_at_unix,
+			'records'          => $records,
 			'messages'         => array_map(
 				function ( object $message ): array {
 					return array(

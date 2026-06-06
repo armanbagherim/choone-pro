@@ -1,10 +1,50 @@
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Regular.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Regular.woff") format("woff");
+}
+
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Medium.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Medium.woff") format("woff");
+}
+
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-Bold.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-Bold.woff") format("woff");
+}
+
+@font-face {
+	font-family: "IRANSansX";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("../fonts/IRANSansX/IRANSansXFaNum-ExtraBold.woff2") format("woff2"),
+		url("../fonts/IRANSansX/IRANSansXFaNum-ExtraBold.woff") format("woff");
+}
+
 .wbp-entry {
-	--wbp-primary: #17412f;
-	--wbp-secondary: #d7b56d;
+	--wbp-primary: #1d4ed8;
+	--wbp-secondary: #93c5fd;
+	--wbp-ink: #0f172a;
+	--wbp-muted: #475569;
+	--wbp-line: #dbe5f4;
 	direction: rtl;
 	position: relative;
 	z-index: 12;
-	margin-top: 22px;
+	margin-top: 16px;
+	font-family: "IRANSansX", sans-serif !important;
 }
 
 .woocommerce div.product .summary .wbp-entry,
@@ -16,45 +56,35 @@
 	display: inline-flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 4px;
-	width: min(100%, 320px);
-	padding: 16px 18px;
-	border: 0;
-	border-radius: 20px;
-	background:
-		radial-gradient(circle at top right, rgba(215, 181, 109, 0.3), transparent 38%),
-		linear-gradient(135deg, var(--wbp-primary), #24533e 56%, #173126);
-	color: #fff;
-	box-shadow: 0 18px 34px rgba(23, 49, 38, 0.18);
+	gap: 2px;
+	width: min(100%, 250px);
+	padding: 13px 16px;
+	border: 1px solid rgba(29, 78, 216, 0.18);
+	border-radius: 16px;
+	background: #fff;
+	color: var(--wbp-ink);
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 	cursor: pointer;
 	text-align: right;
 	position: relative;
 	overflow: hidden;
 }
 
-.wbp-trigger::after {
-	content: "";
-	position: absolute;
-	inset: auto -24px -32px auto;
-	width: 120px;
-	height: 120px;
-	background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
-}
-
 .wbp-trigger-text,
 .wbp-trigger-hint {
 	position: relative;
 	z-index: 1;
+	font-family: "IRANSansX", sans-serif !important;
 }
 
 .wbp-trigger-text {
-	font-size: 18px;
-	font-weight: 800;
+	font-size: 15px;
+	font-weight: 700;
 }
 
 .wbp-trigger-hint {
-	font-size: 12px;
-	color: rgba(255, 255, 255, 0.82);
+	font-size: 11px;
+	color: #64748b;
 }
 
 .wbp-modal {
@@ -80,23 +110,21 @@
 .wbp-modal-backdrop {
 	position: absolute;
 	inset: 0;
-	background: rgba(11, 18, 14, 0.52);
-	backdrop-filter: blur(10px);
+	background: rgba(15, 23, 42, 0.34);
+	backdrop-filter: blur(7px);
 }
 
 .wbp-box {
 	position: relative;
 	z-index: 1;
-	width: min(100%, 540px);
+	width: min(100%, 620px);
 	max-height: calc(100vh - 40px);
 	overflow: auto;
-	padding: 30px;
-	border-radius: 32px;
-	background:
-		radial-gradient(circle at top right, rgba(215, 181, 109, 0.18), transparent 24%),
-		linear-gradient(180deg, #ffffff, #fbf7ef 78%, #f5eddf);
-	border: 1px solid rgba(223, 213, 195, 0.9);
-	box-shadow: 0 36px 90px rgba(10, 18, 14, 0.24);
+	padding: 24px;
+	border-radius: 24px;
+	background: #fff;
+	border: 1px solid var(--wbp-line);
+	box-shadow: 0 18px 60px rgba(15, 23, 42, 0.16);
 	isolation: isolate;
 }
 
@@ -108,9 +136,9 @@
 	height: 42px;
 	border: 0;
 	border-radius: 50%;
-	background: rgba(23, 49, 38, 0.06);
-	color: #173126;
-	font-size: 24px;
+	background: #f8fafc;
+	color: #0f172a;
+	font-size: 20px;
 	line-height: 1;
 	cursor: pointer;
 	display: inline-flex;
@@ -120,127 +148,191 @@
 
 .wbp-eyebrow {
 	display: inline-flex;
-	padding: 7px 12px;
+	padding: 5px 10px;
 	border-radius: 999px;
-	background: rgba(23, 49, 38, 0.07);
-	color: #315241;
-	font-size: 12px;
+	background: #eff6ff;
+	color: #1d4ed8;
+	font-size: 11px;
 	font-weight: 700;
 }
 
 .wbp-box-head h3 {
-	margin: 14px 0 8px;
-	font-size: 30px;
+	margin: 10px 0 6px;
+	font-size: 22px;
 	line-height: 1.25;
 	letter-spacing: -0.02em;
-	color: #173126;
+	color: var(--wbp-ink);
 }
 
 .wbp-box-head p,
 .wbp-note {
-	color: #5f665f;
-	line-height: 1.8;
+	color: var(--wbp-muted);
+	line-height: 1.7;
 }
 
 .wbp-box-head p {
-	max-width: 420px;
+	max-width: 320px;
 	margin: 0;
+	font-size: 12px;
 }
 
 .wbp-offer-form {
 	display: grid;
-	gap: 16px;
-	margin-top: 22px;
+	gap: 14px;
+	margin-top: 18px;
 }
 
+.wbp-section-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 12px;
+	font-weight: 800;
+	color: #1e293b;
+}
+
+.wbp-section-label::before {
+	content: "";
+	width: 28px;
+	height: 2px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, var(--wbp-secondary), rgba(23, 65, 47, 0.25));
+}
+
+.wbp-form-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.wbp-field,
 .wbp-offer-form label {
 	display: grid;
-	gap: 9px;
-	color: #34443a;
-	font-weight: 600;
+	gap: 6px;
+	color: #334155;
+	font-weight: 500;
+	font-size: 12px;
+}
+
+.wbp-field-full {
+	grid-column: 1 / -1;
 }
 
 .wbp-offer-form input,
+.wbp-offer-form textarea,
 .wbp-offer-form button,
 .wbp-account-card {
 	border-radius: 16px;
+	font-family: "IRANSansX", sans-serif !important;
 }
 
-.wbp-offer-form input {
-	border: 1px solid #ddd2c0;
-	padding: 15px 16px;
-	background: #fffdfa;
+.wbp-offer-form input,
+.wbp-thread-form textarea {
+	border: 1px solid var(--wbp-line);
+	padding: 11px 12px;
+	background: #fff;
 	position: relative;
 	z-index: 2;
-	font-size: 15px;
+	font-size: 13px;
+	width: 100%;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+	box-sizing: border-box;
 }
 
-.wbp-offer-form input:focus {
+.wbp-offer-form input:focus,
+.wbp-thread-form textarea:focus {
 	outline: 0;
-	border-color: #17412f;
-	box-shadow: 0 0 0 4px rgba(23, 65, 47, 0.1);
+	border-color: #60a5fa;
+	box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
 }
 
-.wbp-offer-form button {
+.wbp-offer-form button,
+.wbp-thread-form button,
+.wbp-deal-link {
 	border: 0;
-	padding: 15px 18px;
-	background: linear-gradient(135deg, var(--wbp-primary), #21553e);
+	padding: 11px 14px;
+	background: var(--wbp-primary);
 	color: #fff;
-	font-weight: 700;
+	font-weight: 600;
 	cursor: pointer;
 	position: relative;
 	z-index: 2;
-	font-size: 15px;
-	box-shadow: 0 16px 28px rgba(23, 65, 47, 0.18);
+	font-size: 13px;
+	box-shadow: 0 10px 20px rgba(29, 78, 216, 0.18);
+	text-align: center;
+	border-radius: 12px;
 }
 
-.wbp-price-row {
+.wbp-price-row,
+.wbp-offer-summary-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 12px;
+	gap: 8px;
 }
 
-.wbp-price-row:empty {
-	display: none;
-}
-
-.wbp-price-row div {
-	padding: 16px;
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 241, 230, 0.9));
-	border: 1px solid #ece1cf;
-	border-radius: 20px;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+.wbp-price-row div,
+.wbp-offer-summary-grid div {
+	padding: 10px 11px;
+	background: #f8fbff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: none;
 }
 
 .wbp-price-row span,
-.wbp-user-chip {
-	color: #667167;
-	font-size: 13px;
+.wbp-user-chip,
+.wbp-offer-summary-grid span {
+	color: #64748b;
+	font-size: 10px;
 }
 
-.wbp-price-row strong {
-	display: block;
-	margin-top: 8px;
-	font-size: 20px;
-	color: #173126;
+.wbp-price-row strong,
+.wbp-offer-summary-grid strong {
+	display: inline-flex;
+	font-size: 13px;
+	color: var(--wbp-ink);
+}
+
+.wbp-price-row div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
 }
 
 .wbp-user-chip,
 .wbp-response,
-.wbp-note {
-	padding: 14px 16px;
-	border-radius: 18px;
+.wbp-note,
+.wbp-status-note,
+.wbp-thread-empty {
+	padding: 10px 12px;
+	border-radius: 12px;
 }
 
 .wbp-user-chip,
-.wbp-response {
+.wbp-response,
+.wbp-thread-empty {
 	background: linear-gradient(180deg, #f6faf7, #eef6f1);
 	border: 1px solid #d9e6de;
+}
+
+.wbp-user-chip strong {
+	display: block;
+	margin-bottom: 2px;
+	font-size: 12px;
+}
+
+.wbp-user-chip span {
+	font-size: 11px;
 }
 
 .wbp-note {
 	background: linear-gradient(180deg, rgba(215, 181, 109, 0.14), rgba(215, 181, 109, 0.08));
 	border: 1px solid rgba(215, 181, 109, 0.28);
+}
+
+.wbp-response:empty {
+	display: none;
 }
 
 .wbp-response.is-error {
@@ -253,24 +345,338 @@
 	border-color: #cfe9d8;
 }
 
+.wbp-offer-status {
+	display: grid;
+	gap: 14px;
+	margin-top: 16px;
+	padding: 16px;
+	border-radius: 18px;
+	background: #f8fbff;
+	border: 1px solid #dbe7f5;
+	box-shadow: none;
+}
+
+.wbp-offer-status-head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 14px;
+}
+
+.wbp-offer-status-head h4 {
+	margin: 6px 0 0;
+	color: var(--wbp-ink);
+	font-size: 16px;
+}
+
+.wbp-status-timer {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin: 8px 0 0;
+	padding: 7px 9px;
+	border: 1px solid #dbe7f5;
+	border-radius: 12px;
+	background: #fff;
+	font-size: 10px;
+	color: #64748b;
+}
+
+.wbp-timer-label {
+	font-size: 10px;
+	color: #64748b;
+}
+
+.wbp-timer-box {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 46px;
+	padding: 6px 7px;
+	border-radius: 10px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+}
+
+.wbp-timer-box strong {
+	font-size: 13px;
+	line-height: 1;
+	color: #1d4ed8;
+}
+
+.wbp-timer-box small {
+	margin-top: 4px;
+	font-size: 9px;
+	color: #64748b;
+}
+
+.wbp-timer-sep {
+	font-size: 14px;
+	font-weight: 700;
+	color: #94a3b8;
+}
+
+.wbp-tabs {
+	display: flex;
+	gap: 8px;
+	padding: 4px;
+	border-radius: 12px;
+	background: #eef4ff;
+}
+
+.wbp-tab {
+	flex: 1;
+	padding: 9px 10px;
+	border: 0;
+	border-radius: 10px;
+	background: transparent;
+	color: #475569;
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+	font-family: "IRANSansX", sans-serif !important;
+}
+
+.wbp-tab.is-active {
+	background: #fff;
+	color: var(--wbp-primary);
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.wbp-tab-panel {
+	display: none;
+}
+
+.wbp-tab-panel.is-active {
+	display: grid;
+	gap: 12px;
+}
+
+.wbp-offer-timeline {
+	display: grid;
+	gap: 10px;
+}
+
+.wbp-offer-record {
+	display: grid;
+	grid-template-columns: 12px 1fr;
+	gap: 10px;
+	align-items: start;
+}
+
+.wbp-offer-record-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--wbp-primary);
+	margin-top: 7px;
+}
+
+.wbp-offer-record-body {
+	padding: 10px 12px;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid #dbe7f5;
+}
+
+.wbp-offer-record-body strong {
+	display: block;
+	font-size: 12px;
+	color: var(--wbp-ink);
+}
+
+.wbp-offer-record-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-top: 6px;
+	font-size: 11px;
+	color: #64748b;
+}
+
+.wbp-deal-link {
+	display: inline-flex;
+	justify-content: center;
+	text-decoration: none;
+	border-radius: 16px;
+}
+
+.wbp-status-note {
+	background: #fff;
+	border: 1px solid #dbe7f5;
+	color: #334155;
+	font-size: 12px;
+}
+
+.wbp-status-note.is-rejected {
+	background: #fff1ef;
+	border-color: #f3ccc6;
+	color: #992f28;
+}
+
+.wbp-thread {
+	display: grid;
+	gap: 12px;
+}
+
+.wbp-thread-item {
+	position: relative;
+	padding: 12px 14px;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid #dbe7f5;
+	box-shadow: none;
+}
+
+.wbp-thread-item.role-admin {
+	background: #eff6ff;
+	border-color: #bfdbfe;
+}
+
+.wbp-thread-item.role-admin::before,
+.wbp-thread-item.role-customer::before {
+	content: "";
+	position: absolute;
+	top: 16px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+.wbp-thread-item.role-admin::before {
+	right: -5px;
+	background: #2b8a57;
+	box-shadow: 0 0 0 6px rgba(43, 138, 87, 0.1);
+}
+
+.wbp-thread-item.role-customer::before {
+	left: -5px;
+	background: #c99b47;
+	box-shadow: 0 0 0 6px rgba(201, 155, 71, 0.1);
+}
+
+.wbp-thread-item strong {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 12px;
+	color: #1e293b;
+}
+
+.wbp-thread-item p {
+	margin: 0;
+	line-height: 1.8;
+	color: #334155;
+	font-size: 12px;
+}
+
+.wbp-thread-item time {
+	display: block;
+	margin-top: 8px;
+	font-size: 10px;
+	color: #94a3b8;
+}
+
+.wbp-thread-form {
+	display: grid;
+	gap: 10px;
+	padding: 12px;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid #dbe7f5;
+	box-sizing: border-box;
+}
+
+.wbp-thread-form textarea {
+	min-height: 84px;
+	resize: vertical;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.wbp-thread-form button {
+	justify-self: start;
+	min-width: 132px;
+}
+
 .wbp-account-list {
 	display: grid;
 	gap: 16px;
 }
 
 .wbp-account-card {
-	padding: 18px;
+	padding: 22px;
 	border: 1px solid #e7dbc9;
+	border-radius: 24px;
 	background: linear-gradient(180deg, #fff, #faf4e8);
+	box-shadow: 0 18px 36px rgba(23, 49, 38, 0.08);
+	font-family: "IRANSansX", sans-serif !important;
 }
 
+.wbp-account-top,
 .wbp-account-prices,
-.wbp-account-actions {
+.wbp-account-actions,
+.wbp-account-meta {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px;
 	margin-top: 12px;
+	align-items: center;
+	justify-content: space-between;
 }
+
+.wbp-account-token {
+	margin: 8px 0 0;
+	color: #617064;
+}
+
+.wbp-account-meta span,
+.wbp-account-prices span {
+	padding: 10px 12px;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.65);
+	border: 1px solid #ebdeca;
+}
+
+.wbp-account-thread {
+	display: grid;
+	gap: 10px;
+	margin-top: 14px;
+}
+
+.wbp-account-thread-item {
+	padding: 12px 14px;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.75);
+	border: 1px solid #ede3d1;
+}
+
+.wbp-account-thread-item.role-admin {
+	background: rgba(238, 247, 241, 0.95);
+}
+
+.wbp-account-thread-item p {
+	margin: 6px 0 0;
+}
+
+.wbp-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 10px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+.status-pending { background: #fff1c9; color: #765500; }
+.status-accepted,
+.status-converted_to_order,
+.status-customer_accepted_counter { background: #daf7e7; color: #0c6c42; }
+.status-rejected,
+.status-expired { background: #ffe0df; color: #a2322c; }
+.status-countered { background: #ddeaff; color: #1d4fa6; }
 
 body.wbp-modal-open {
 	overflow: hidden;
@@ -283,15 +689,28 @@ body.wbp-modal-open {
 	}
 
 	.wbp-box {
-		padding: 24px 18px;
-		border-radius: 26px;
+		padding: 18px;
+		border-radius: 18px;
 	}
 
 	.wbp-box-head h3 {
-		font-size: 26px;
+		font-size: 20px;
 	}
 
-	.wbp-price-row {
+	.wbp-form-grid,
+	.wbp-price-row,
+	.wbp-offer-summary-grid {
 		grid-template-columns: 1fr;
+	}
+
+	.wbp-offer-status-head,
+	.wbp-account-top {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.wbp-thread-form button,
+	.wbp-deal-link {
+		width: 100%;
 	}
 }

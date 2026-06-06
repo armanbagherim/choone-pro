@@ -14,6 +14,7 @@ class WBP_Admin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'admin_init', array( $this, 'handle_actions' ) );
+		add_action( 'wp_ajax_wbp_admin_poll', array( $this, 'ajax_admin_poll' ) );
 		add_action( 'woocommerce_product_options_pricing', array( $this, 'product_fields' ) );
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_fields' ) );
 	}
@@ -37,6 +38,32 @@ class WBP_Admin {
 		$admin_js_version  = file_exists( WBP_PATH . 'assets/js/admin.js' ) ? (string) filemtime( WBP_PATH . 'assets/js/admin.js' ) : WBP_VERSION;
 		wp_enqueue_style( 'wbp-admin', WBP_URL . 'assets/css/admin.css', array(), $admin_css_version );
 		wp_enqueue_script( 'wbp-admin', WBP_URL . 'assets/js/admin.js', array( 'jquery' ), $admin_js_version, true );
+		wp_localize_script(
+			'wbp-admin',
+			'wbpAdmin',
+			array(
+				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+				'nonce'        => wp_create_nonce( 'wbp_admin_poll' ),
+				'pollInterval' => 10,
+			)
+		);
+	}
+
+	public function ajax_admin_poll(): void {
+		check_ajax_referer( 'wbp_admin_poll', 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
+
+		$offers = $this->offers->get_offers();
+		$latest = $offers[0] ?? null;
+		wp_send_json_success(
+			array(
+				'latest_id'         => $latest ? (int) $latest->id : 0,
+				'latest_created_at' => $latest ? (string) $latest->created_at : '',
+				'pending_count'     => count( array_filter( $offers, fn( $offer ) => 'pending' === $offer->status ) ),
+			)
+		);
 	}
 
 	public function render_dashboard(): void {
@@ -155,26 +182,38 @@ class WBP_Admin {
 		$phone    = $offer->guest_phone ?: ( $offer->user_id ? get_user_meta( (int) $offer->user_id, 'billing_phone', true ) : '' );
 		?>
 		<div class="wrap wbp-admin">
-			<h1><?php esc_html_e( 'جزئیات پیشنهاد', 'woo-bargain-pro' ); ?> #<?php echo esc_html( (string) $offer->id ); ?></h1>
+			<div class="wbp-offer-hero">
+				<div>
+					<h1><?php esc_html_e( 'جزئیات پیشنهاد', 'woo-bargain-pro' ); ?> #<?php echo esc_html( (string) $offer->id ); ?></h1>
+					<p><?php echo esc_html( $product ? $product->get_name() : __( 'محصول حذف شده', 'woo-bargain-pro' ) ); ?></p>
+				</div>
+				<div class="wbp-offer-hero-meta">
+					<span class="wbp-badge status-<?php echo esc_attr( $offer->status ); ?>"><?php echo esc_html( $this->offers->statuses()[ $offer->status ] ?? $offer->status ); ?></span>
+					<span class="wbp-offer-token"><?php esc_html_e( 'کد رهگیری', 'woo-bargain-pro' ); ?>: <?php echo esc_html( $offer->token ); ?></span>
+				</div>
+			</div>
+			<div class="wbp-offer-stats">
+				<div class="wbp-card"><span><?php esc_html_e( 'قیمت اصلی', 'woo-bargain-pro' ); ?></span><strong><?php echo wp_kses_post( wc_price( (float) $offer->original_price ) ); ?></strong></div>
+				<div class="wbp-card"><span><?php esc_html_e( 'پیشنهاد مشتری', 'woo-bargain-pro' ); ?></span><strong><?php echo wp_kses_post( wc_price( (float) $offer->offered_price ) ); ?></strong></div>
+				<div class="wbp-card"><span><?php esc_html_e( 'پیشنهاد متقابل', 'woo-bargain-pro' ); ?></span><strong><?php echo $offer->counter_price ? wp_kses_post( wc_price( (float) $offer->counter_price ) ) : '-'; ?></strong></div>
+				<div class="wbp-card"><span><?php esc_html_e( 'قیمت نهایی', 'woo-bargain-pro' ); ?></span><strong><?php echo $offer->accepted_price ? wp_kses_post( wc_price( (float) $offer->accepted_price ) ) : '-'; ?></strong></div>
+			</div>
 			<div class="wbp-detail-grid">
-				<div class="wbp-panel">
+				<div class="wbp-panel wbp-detail-panel">
 					<h2><?php esc_html_e( 'اطلاعات پیشنهاد', 'woo-bargain-pro' ); ?></h2>
 					<ul class="wbp-meta">
-						<li><?php esc_html_e( 'محصول:', 'woo-bargain-pro' ); ?> <?php echo esc_html( $product ? $product->get_name() : '-' ); ?></li>
-						<li><?php esc_html_e( 'قیمت اصلی:', 'woo-bargain-pro' ); ?> <?php echo wp_kses_post( wc_price( (float) $offer->original_price ) ); ?></li>
-						<li><?php esc_html_e( 'قیمت پیشنهادی:', 'woo-bargain-pro' ); ?> <?php echo wp_kses_post( wc_price( (float) $offer->offered_price ) ); ?></li>
-						<li><?php esc_html_e( 'پیشنهاد متقابل:', 'woo-bargain-pro' ); ?> <?php echo $offer->counter_price ? wp_kses_post( wc_price( (float) $offer->counter_price ) ) : '-'; ?></li>
-						<li><?php esc_html_e( 'قیمت نهایی:', 'woo-bargain-pro' ); ?> <?php echo $offer->accepted_price ? wp_kses_post( wc_price( (float) $offer->accepted_price ) ) : '-'; ?></li>
-						<li><?php esc_html_e( 'کد رهگیری:', 'woo-bargain-pro' ); ?> <?php echo esc_html( $offer->token ); ?></li>
-						<li><?php esc_html_e( 'وضعیت:', 'woo-bargain-pro' ); ?> <span class="wbp-badge status-<?php echo esc_attr( $offer->status ); ?>"><?php echo esc_html( $this->offers->statuses()[ $offer->status ] ?? $offer->status ); ?></span></li>
+						<li><span><?php esc_html_e( 'محصول', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( $product ? $product->get_name() : '-' ); ?></strong></li>
+						<li><span><?php esc_html_e( 'تاریخ ثبت', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( wp_date( 'Y/m/d H:i', strtotime( $offer->created_at ) ) ); ?></strong></li>
+						<li><span><?php esc_html_e( 'آخرین بروزرسانی', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( wp_date( 'Y/m/d H:i', strtotime( $offer->updated_at ) ) ); ?></strong></li>
+						<li><span><?php esc_html_e( 'کد رهگیری', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( $offer->token ); ?></strong></li>
 					</ul>
 				</div>
-				<div class="wbp-panel">
+				<div class="wbp-panel wbp-detail-panel">
 					<h2><?php esc_html_e( 'اطلاعات مشتری', 'woo-bargain-pro' ); ?></h2>
-					<ul class="wbp-meta">
-						<li><?php esc_html_e( 'نام:', 'woo-bargain-pro' ); ?> <?php echo esc_html( $offer->guest_name ?: ( $offer->user_id ? get_the_author_meta( 'display_name', (int) $offer->user_id ) : '-' ) ); ?></li>
-						<li><?php esc_html_e( 'ایمیل:', 'woo-bargain-pro' ); ?> <?php echo esc_html( $offer->guest_email ?: ( $offer->user_id ? get_the_author_meta( 'user_email', (int) $offer->user_id ) : '-' ) ); ?></li>
-						<li><?php esc_html_e( 'تلفن:', 'woo-bargain-pro' ); ?> <?php echo esc_html( $phone ?: '-' ); ?></li>
+					<ul class="wbp-meta wbp-customer-grid">
+						<li><span><?php esc_html_e( 'نام', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( $offer->guest_name ?: ( $offer->user_id ? get_the_author_meta( 'display_name', (int) $offer->user_id ) : '-' ) ); ?></strong></li>
+						<li><span><?php esc_html_e( 'ایمیل', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( $offer->guest_email ?: ( $offer->user_id ? get_the_author_meta( 'user_email', (int) $offer->user_id ) : '-' ) ); ?></strong></li>
+						<li><span><?php esc_html_e( 'تلفن', 'woo-bargain-pro' ); ?></span><strong><?php echo esc_html( $phone ?: '-' ); ?></strong></li>
 					</ul>
 					<div class="wbp-actions">
 						<form method="post">
@@ -189,12 +228,6 @@ class WBP_Admin {
 							<input type="number" step="0.01" min="0" name="counter_price" placeholder="<?php esc_attr_e( 'قیمت متقابل', 'woo-bargain-pro' ); ?>">
 							<button name="wbp_action" value="counter" class="button button-secondary"><?php esc_html_e( 'ارسال قیمت متقابل', 'woo-bargain-pro' ); ?></button>
 						</form>
-						<form method="post">
-							<?php wp_nonce_field( 'wbp_admin_action', 'wbp_nonce' ); ?>
-							<input type="hidden" name="offer_id" value="<?php echo esc_attr( (string) $offer->id ); ?>">
-							<textarea name="admin_message" placeholder="<?php esc_attr_e( 'پیام به مشتری', 'woo-bargain-pro' ); ?>"></textarea>
-							<button name="wbp_action" value="message" class="button"><?php esc_html_e( 'ارسال پیام', 'woo-bargain-pro' ); ?></button>
-						</form>
 						<?php if ( $phone ) : ?>
 							<a class="button" target="_blank" href="<?php echo esc_url( WBP_WhatsApp::admin_link( $phone, 'سلام، درباره پیشنهاد شما با کد ' . $offer->token . ' در تماس هستیم.' ) ); ?>"><?php esc_html_e( 'واتساپ', 'woo-bargain-pro' ); ?></a>
 						<?php endif; ?>
@@ -204,7 +237,7 @@ class WBP_Admin {
 					</div>
 				</div>
 			</div>
-			<div class="wbp-panel">
+			<div class="wbp-panel wbp-detail-panel">
 				<h2><?php esc_html_e( 'گفت‌وگو', 'woo-bargain-pro' ); ?></h2>
 				<div class="wbp-chat">
 					<?php if ( empty( $messages ) ) : ?>
@@ -218,6 +251,12 @@ class WBP_Admin {
 						</div>
 					<?php endforeach; ?>
 				</div>
+				<form method="post" class="wbp-admin-message-form">
+					<?php wp_nonce_field( 'wbp_admin_action', 'wbp_nonce' ); ?>
+					<input type="hidden" name="offer_id" value="<?php echo esc_attr( (string) $offer->id ); ?>">
+					<textarea name="admin_message" placeholder="<?php esc_attr_e( 'پیام به مشتری', 'woo-bargain-pro' ); ?>"></textarea>
+					<button name="wbp_action" value="message" class="button button-primary"><?php esc_html_e( 'ارسال پیام', 'woo-bargain-pro' ); ?></button>
+				</form>
 			</div>
 		</div>
 		<?php
