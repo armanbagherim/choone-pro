@@ -1,0 +1,297 @@
+.wbp-entry {
+	--wbp-primary: #17412f;
+	--wbp-secondary: #d7b56d;
+	direction: rtl;
+	position: relative;
+	z-index: 12;
+	margin-top: 22px;
+}
+
+.woocommerce div.product .summary .wbp-entry,
+.woocommerce-page div.product .summary .wbp-entry {
+	clear: both;
+}
+
+.wbp-trigger {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	width: min(100%, 320px);
+	padding: 16px 18px;
+	border: 0;
+	border-radius: 20px;
+	background:
+		radial-gradient(circle at top right, rgba(215, 181, 109, 0.3), transparent 38%),
+		linear-gradient(135deg, var(--wbp-primary), #24533e 56%, #173126);
+	color: #fff;
+	box-shadow: 0 18px 34px rgba(23, 49, 38, 0.18);
+	cursor: pointer;
+	text-align: right;
+	position: relative;
+	overflow: hidden;
+}
+
+.wbp-trigger::after {
+	content: "";
+	position: absolute;
+	inset: auto -24px -32px auto;
+	width: 120px;
+	height: 120px;
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+}
+
+.wbp-trigger-text,
+.wbp-trigger-hint {
+	position: relative;
+	z-index: 1;
+}
+
+.wbp-trigger-text {
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.wbp-trigger-hint {
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.wbp-modal {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.22s ease, visibility 0.22s ease;
+	z-index: 999999;
+}
+
+.wbp-modal.is-open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+.wbp-modal-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(11, 18, 14, 0.52);
+	backdrop-filter: blur(10px);
+}
+
+.wbp-box {
+	position: relative;
+	z-index: 1;
+	width: min(100%, 540px);
+	max-height: calc(100vh - 40px);
+	overflow: auto;
+	padding: 30px;
+	border-radius: 32px;
+	background:
+		radial-gradient(circle at top right, rgba(215, 181, 109, 0.18), transparent 24%),
+		linear-gradient(180deg, #ffffff, #fbf7ef 78%, #f5eddf);
+	border: 1px solid rgba(223, 213, 195, 0.9);
+	box-shadow: 0 36px 90px rgba(10, 18, 14, 0.24);
+	isolation: isolate;
+}
+
+.wbp-modal-close {
+	position: absolute;
+	top: 18px;
+	left: 18px;
+	width: 42px;
+	height: 42px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(23, 49, 38, 0.06);
+	color: #173126;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wbp-eyebrow {
+	display: inline-flex;
+	padding: 7px 12px;
+	border-radius: 999px;
+	background: rgba(23, 49, 38, 0.07);
+	color: #315241;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.wbp-box-head h3 {
+	margin: 14px 0 8px;
+	font-size: 30px;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+	color: #173126;
+}
+
+.wbp-box-head p,
+.wbp-note {
+	color: #5f665f;
+	line-height: 1.8;
+}
+
+.wbp-box-head p {
+	max-width: 420px;
+	margin: 0;
+}
+
+.wbp-offer-form {
+	display: grid;
+	gap: 16px;
+	margin-top: 22px;
+}
+
+.wbp-offer-form label {
+	display: grid;
+	gap: 9px;
+	color: #34443a;
+	font-weight: 600;
+}
+
+.wbp-offer-form input,
+.wbp-offer-form button,
+.wbp-account-card {
+	border-radius: 16px;
+}
+
+.wbp-offer-form input {
+	border: 1px solid #ddd2c0;
+	padding: 15px 16px;
+	background: #fffdfa;
+	position: relative;
+	z-index: 2;
+	font-size: 15px;
+}
+
+.wbp-offer-form input:focus {
+	outline: 0;
+	border-color: #17412f;
+	box-shadow: 0 0 0 4px rgba(23, 65, 47, 0.1);
+}
+
+.wbp-offer-form button {
+	border: 0;
+	padding: 15px 18px;
+	background: linear-gradient(135deg, var(--wbp-primary), #21553e);
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+	position: relative;
+	z-index: 2;
+	font-size: 15px;
+	box-shadow: 0 16px 28px rgba(23, 65, 47, 0.18);
+}
+
+.wbp-price-row {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.wbp-price-row:empty {
+	display: none;
+}
+
+.wbp-price-row div {
+	padding: 16px;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 241, 230, 0.9));
+	border: 1px solid #ece1cf;
+	border-radius: 20px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.wbp-price-row span,
+.wbp-user-chip {
+	color: #667167;
+	font-size: 13px;
+}
+
+.wbp-price-row strong {
+	display: block;
+	margin-top: 8px;
+	font-size: 20px;
+	color: #173126;
+}
+
+.wbp-user-chip,
+.wbp-response,
+.wbp-note {
+	padding: 14px 16px;
+	border-radius: 18px;
+}
+
+.wbp-user-chip,
+.wbp-response {
+	background: linear-gradient(180deg, #f6faf7, #eef6f1);
+	border: 1px solid #d9e6de;
+}
+
+.wbp-note {
+	background: linear-gradient(180deg, rgba(215, 181, 109, 0.14), rgba(215, 181, 109, 0.08));
+	border: 1px solid rgba(215, 181, 109, 0.28);
+}
+
+.wbp-response.is-error {
+	background: #fff0ef;
+	border-color: #f2c4bf;
+}
+
+.wbp-response.is-success {
+	background: #eef8f2;
+	border-color: #cfe9d8;
+}
+
+.wbp-account-list {
+	display: grid;
+	gap: 16px;
+}
+
+.wbp-account-card {
+	padding: 18px;
+	border: 1px solid #e7dbc9;
+	background: linear-gradient(180deg, #fff, #faf4e8);
+}
+
+.wbp-account-prices,
+.wbp-account-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 12px;
+}
+
+body.wbp-modal-open {
+	overflow: hidden;
+}
+
+@media (max-width: 640px) {
+	.wbp-trigger,
+	.wbp-box {
+		width: 100%;
+	}
+
+	.wbp-box {
+		padding: 24px 18px;
+		border-radius: 26px;
+	}
+
+	.wbp-box-head h3 {
+		font-size: 26px;
+	}
+
+	.wbp-price-row {
+		grid-template-columns: 1fr;
+	}
+}
